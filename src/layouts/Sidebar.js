@@ -18,19 +18,12 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div>
-        <div
-          onClick={() => showQuizList(!showQuiz)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "start",
-            cursor: "pointer",
-            marginBottom: "1rem",
-          }}
-        >
+      <div className="sidebar-item">
+        <h2>Home</h2>
+      </div>
+      <div className={"sidebar-item"}>
+        <div onClick={() => showQuizList(!showQuiz)}>
           <h2>Quiz List</h2>
-          {showQuiz ? "▼" : "▶"}
         </div>
         <ul>
           {showQuiz
@@ -44,18 +37,8 @@ function Sidebar() {
             : null}
         </ul>
       </div>
-      <div
-        onClick={() => {}}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "start",
-          cursor: "pointer",
-          marginBottom: "1rem",
-          margin: "10px",
-        }}
-      >
-        <h2>Home</h2>
+      <div className={"sidebar-item"}>
+        <h2>Logout</h2>
       </div>
     </div>
   );

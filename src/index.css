@@ -1,4 +1,4 @@
-body {
+.body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
   background-color: #fff;
@@ -6,14 +6,17 @@ body {
 /* Navbar.css */
 
 .navbar {
-  display: flex;
-  justify-content: start;
-  gap: 20px;
-  align-items: center;
-  background-color: #00b894; /* Teal-greenish */
-  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #00b894;
   color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  z-index: 1000;
 }
 
 .navbar h1 {
@@ -22,18 +25,15 @@ body {
 }
 
 .sidebar {
-  margin-top: 65px;
   position: fixed;
-  top: 0;
+  top: 60px; /* below navbar */
   left: 0;
-
   width: 250px;
-  height: 100vh;
+  height: calc(100vh - 60px);
   background-color: #2d3436;
   color: white;
-  padding: 2rem 1rem;
-  transition: left 0.3s ease;
-  z-index: 1000;
+  padding: 1px;
+  overflow-y: auto;
 }
 
 .Item {
@@ -53,4 +53,80 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   background-color: #f1f2f6;
+}
+.sidebar-item {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  cursor: pointer;
+  margin: 1px;
+  border: 1px solid #ccc;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px; /* below navbar */
+  margin-left: 250px; /* beside sidebar */
+  padding: 2rem;
+  min-height: calc(100vh - 60px);
+  background-color: blue;
+}
+.QuizBox {
+  background-color: white;
+  border: solid black;
+  border-radius: 30px;
+  padding: 30px;
+  max-width: max-content;
+  margin: 30px;
+}
+
+.QuizBox ul li {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.taketest {
+  display: flex;
+  background-color: white;
+  border: solid black;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  max-width: 300px;
+  min-width: 900px;
+  margin: 30px;
+}
+.taketest .add-file {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: 1rem;
+  place-items: center;
+  border: 1px solid black;
+  border-radius: 20px;
+  min-width: 280px;
+  max-width: 880px;
+  padding: 20px;
+}
+
+.taketest .add-system {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: 1rem;
+  place-items: center;
+  border-radius: 20px;
+  min-width: 280px;
+  max-width: 880px;
+  padding: 20px;
+}
+
+.plus {
+  font-size: 20px;
 }
