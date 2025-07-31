@@ -1,25 +1,10 @@
-import { useState } from "react";
-
-function Quizbox({ quiz, index, selection, setSelection }) {
+function Quizstatbox({ quiz, index, selection }) {
   const number = index + 1; // display number
   const question = quiz.title;
   const options = quiz.options;
   const answer = quiz.answer;
 
-  const [allow, setAllow] = useState(true);
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  function handleClick(option) {
-    if (allow) {
-      setSelectedOption(option);
-      const updated = [...selection];
-      updated[index] = option;
-      setSelection(updated);
-      setAllow(false);
-    }
-  }
-
-  function checkColor(option) {
+  function checkColor(option, selectedOption) {
     if (!selectedOption) return "black";
     if (option !== selectedOption && option !== answer) return "black";
     return option === answer ? "green" : "red";
@@ -36,9 +21,8 @@ function Quizbox({ quiz, index, selection, setSelection }) {
           return (
             <li
               key={option}
-              onClick={() => handleClick(option)}
               style={{
-                color: checkColor(option),
+                color: checkColor(option, selection),
                 cursor: "pointer",
                 listStyle: "none",
               }}
@@ -52,4 +36,4 @@ function Quizbox({ quiz, index, selection, setSelection }) {
   );
 }
 
-export default Quizbox;
+export default Quizstatbox;

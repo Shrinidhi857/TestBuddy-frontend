@@ -1,16 +1,28 @@
 import { useState } from "react";
 import Quizbox from "../components/Quizbox";
 import Taketest from "./Taketest";
+import Stat from "./Stats";
+import quizData from "../constants/quixlist";
+
 function Main() {
   const [page, setPage] = useState("homepage");
+  const [selection, setSelection] = useState(
+    new Array(quizData.length).fill(null)
+  );
 
   function handleUpload() {
     console.log("file upload here");
   }
 
   function handleTaketest() {
-    console.log("take test");
     setPage("taketestpage");
+  }
+
+  function handleQuizSubmit() {
+    for (let i = 0; i < selection.length; i++) {
+      console.log(`Question ${i + 1}: Selected Option - ${selection[i]}`);
+    }
+    setPage("statpage");
   }
 
   return (
@@ -24,13 +36,20 @@ function Main() {
           case "taketestpage":
             return (
               <>
-                <Quizbox />
-                <Quizbox />
-                <Quizbox />
-                <Quizbox />
-                <Quizbox />
+                {quizData.map((quiz, index) => (
+                  <Quizbox
+                    key={index}
+                    index={index}
+                    quiz={quiz}
+                    selection={selection}
+                    setSelection={setSelection}
+                  />
+                ))}
+                <button onClick={handleQuizSubmit}>Submit</button>
               </>
             );
+          case "statpage":
+            return <Stat props={quizData} selection={selection} />;
           default:
             return null;
         }
