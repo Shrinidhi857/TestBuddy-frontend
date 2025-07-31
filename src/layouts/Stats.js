@@ -15,28 +15,33 @@ function Stats({ props, selection }) {
   const percent = Math.round((correct / props.length) * 100);
 
   return (
-    <div className="statbox-1">
-      <h2>Quiz Result</h2>
-      <div className="progress-container">
-        <div className="progress-bar-correct" style={{ width: `${percent}%` }}>
-          {percent}% Correct
+    <div>
+      <div className="statbox-1">
+        <h2>Quiz Result</h2>
+        <div className="progress-container">
+          <div
+            className="progress-bar-correct"
+            style={{ width: `${percent}%` }}
+          >
+            {percent}% Correct
+          </div>
+        </div>
+        <div className="progress-container">
+          <div
+            className="progress-bar-wrong"
+            style={{ width: `${100 - percent}%` }}
+          >
+            {100 - percent}% Wrong
+          </div>
+        </div>
+        <div style={{ marginTop: "10px", textAlign: "center" }}>
+          <span style={{ color: "green", marginRight: "15px" }}>
+            ✅ Correct: {correct}
+          </span>
+          <span style={{ color: "red" }}>❌ Wrong: {wrong}</span>
         </div>
       </div>
-      <div className="progress-container">
-        <div
-          className="progress-bar-wrong"
-          style={{ width: `${100 - percent}%` }}
-        >
-          {100 - percent}% Wrong
-        </div>
-      </div>
-      <div style={{ marginTop: "10px", textAlign: "center" }}>
-        <span style={{ color: "green", marginRight: "15px" }}>
-          ✅ Correct: {correct}
-        </span>
-        <span style={{ color: "red" }}>❌ Wrong: {wrong}</span>
-      </div>
-      <>
+      <div>
         {props.map((quiz, index) => (
           <Quizstatbox
             key={index}
@@ -45,7 +50,7 @@ function Stats({ props, selection }) {
             selection={selection[index]}
           />
         ))}
-      </>
+      </div>
     </div>
   );
 }

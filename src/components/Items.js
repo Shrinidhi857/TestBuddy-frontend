@@ -3,9 +3,9 @@ import "../index.css";
 
 function QuizItem({ quiz, handleShowStats }) {
   return (
-    <div className="Item" onClick={handleShowStats}>
+    <h3 className="Item" onClick={handleShowStats}>
       {quiz.no}. {quiz.title}
-    </div>
+    </h3>
   );
 }
 

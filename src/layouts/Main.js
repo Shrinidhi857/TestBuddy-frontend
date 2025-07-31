@@ -4,8 +4,7 @@ import Taketest from "./Taketest";
 import Stat from "./Stats";
 import quizData from "../constants/quixlist";
 
-function Main() {
-  const [page, setPage] = useState("homepage");
+function Main({ page, setPage }) {
   const [selection, setSelection] = useState(
     new Array(quizData.length).fill(null)
   );

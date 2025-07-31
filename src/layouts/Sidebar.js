@@ -3,7 +3,7 @@ import "../index.css";
 import QuizItem from "../components/Items"; // assuming file name is Items.js
 import { useState } from "react";
 
-function Sidebar() {
+function Sidebar({ curpage, setPage }) {
   const quizList = [
     { no: 1, title: "Geography" },
     { no: 2, title: "History" },
@@ -15,10 +15,13 @@ function Sidebar() {
   function handleShowStats(quiz) {
     console.log("Clicked quiz:", quiz);
   }
+  function handleClickItem(page) {
+    if (page !== curpage) setPage(page);
+  }
 
   return (
     <div className="sidebar">
-      <div className="sidebar-item">
+      <div className="sidebar-item" onClick={() => handleClickItem("homepage")}>
         <h2>Home</h2>
       </div>
       <div className={"sidebar-item"}>
