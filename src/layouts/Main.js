@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Quizbox from "../components/Quizbox";
 import Taketest from "./Taketest";
 import Stat from "./Stats";
-import quizData from "../constants/quixlist";
+import QuizUploader from "../components/QuizUploader";
 
 function Main({ page, setPage }) {
-  const [selection, setSelection] = useState(
-    new Array(quizData.length).fill(null)
-  );
+  const [quizData, setQuizData] = useState(null);
+  const [selection, setSelection] = useState([]);
+
+  useEffect(() => {
+    if (quizData) {
+      setSelection(new Array(quizData.length).fill(null));
+    }
+  }, [quizData]);
 
   function handleUpload() {
     console.log("file upload here");
@@ -30,20 +35,27 @@ function Main({ page, setPage }) {
         switch (page) {
           case "homepage":
             return (
-              <Taketest uploadpdf={handleUpload} clicktest={handleTaketest} />
+              <div style={{ display: "flex" }}>
+                <QuizUploader
+                  setQuizData={setQuizData}
+                  handleQuiz={handleTaketest}
+                />
+                <button onClick={handleTaketest}>button</button>
+              </div>
             );
           case "taketestpage":
             return (
               <>
-                {quizData.map((quiz, index) => (
-                  <Quizbox
-                    key={index}
-                    index={index}
-                    quiz={quiz}
-                    selection={selection}
-                    setSelection={setSelection}
-                  />
-                ))}
+                {quizData &&
+                  quizData.map((quiz, index) => (
+                    <Quizbox
+                      key={index}
+                      index={index}
+                      quiz={quiz}
+                      selection={selection}
+                      setSelection={setSelection}
+                    />
+                  ))}
                 <button onClick={handleQuizSubmit}>Submit</button>
               </>
             );
