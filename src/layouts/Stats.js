@@ -35,10 +35,10 @@ function Stats({ props, selection }) {
           </div>
         </div>
         <div style={{ marginTop: "10px", textAlign: "center" }}>
-          <span style={{ color: "green", marginRight: "15px" }}>
+          <span style={{ color: "#B0FC38", marginRight: "15px" }}>
             ✅ Correct: {correct}
           </span>
-          <span style={{ color: "red" }}>❌ Wrong: {wrong}</span>
+          <span style={{ color: "#FF7081" }}>❌ Wrong: {wrong}</span>
         </div>
       </div>
       <div>

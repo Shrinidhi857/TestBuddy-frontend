@@ -5,9 +5,9 @@ function Quizstatbox({ quiz, index, selection }) {
   const answer = quiz.answer;
 
   function checkColor(option, selectedOption) {
-    if (!selectedOption) return "black";
-    if (option !== selectedOption && option !== answer) return "black";
-    return option === answer ? "green" : "red";
+    if (!selectedOption) return "#ffff";
+    if (option !== selectedOption && option !== answer) return "#ffff";
+    return option === answer ? "#B0FC38" : "#FF7081";
   }
 
   return (

@@ -3,6 +3,7 @@
 body {
   margin: 0;
   background-color: #fff;
+  color: #fff;
   font-family: "Roboto", sans-serif; /* Use Roboto font */
   font-optical-sizing: auto; /* Allows automatic adjustment for size clarity */
   font-weight: 400; /* Choose a weight: 100 to 900 */
@@ -48,10 +49,11 @@ body {
 }
 
 .Item {
-  background-color: #212121;
+  background-color: #303030;
+  width: max-content;
   border-radius: 2px;
-  padding: 1rem;
-  color: rgb(250, 249, 249);
+  padding: 8px;
+  color: rgb(219, 219, 219);
   margin: 1px;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
@@ -61,9 +63,10 @@ body {
 
 /* Hover effect */
 .Item:hover {
+  border-radius: 30px;
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: #f1f2f6;
+  background-color: #424242;
 }
 .sidebar-item {
   display: flex;
@@ -83,23 +86,48 @@ body {
   min-height: calc(100vh - 60px);
   background-color: #212121;
 }
+.main button {
+  color: #e0e0e0;
+  border-radius: 15px;
+  width: max-content;
+  height: max-content;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #424242;
+}
+.quizinputbox {
+  display: flex;
+  flex-direction: column;
+}
+
 .QuizBox {
-  background-color: white;
-  border: solid black;
+  background-color: #424242;
+  border: solid rgb(100, 100, 100);
   border-radius: 30px;
   padding: 25px;
   margin: 10px;
   width: 50vw; /* 30% of the viewport width */
   height: 30vh;
 }
+.QuizBox .questionname {
+  margin-top: 10px;
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 20px;
+}
 
 .QuizBox ul li {
   padding: 0.5rem 1rem;
   margin-bottom: 0.5rem;
-  border: 1px solid #ccc;
   border-radius: 6px;
   cursor: pointer;
+  background-color: #303030;
   transition: background-color 0.2s;
+  font-weight: 500;
 }
 
 .taketest {
@@ -152,8 +180,8 @@ body {
 }
 
 .statbox-1 {
-  background-color: white;
-  border: solid black;
+  background-color: #424242;
+  border: solid rgb(100, 100, 100);
   border-radius: 30px;
   padding: 25px;
   margin: 10px;
@@ -172,13 +200,13 @@ body {
   border-radius: 15px;
   overflow: hidden;
   margin: 20px;
-  border: 1px solid #ccc;
+  border: 2px solid #ffffff;
 }
 
 .progress-bar-correct {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #4caf50, #81c784);
+  background: linear-gradient(90deg, #81c784, #b0fc38);
   text-align: center;
   line-height: 25px;
   color: white;
@@ -188,7 +216,7 @@ body {
 .progress-bar-wrong {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #d11919, #e60808);
+  background: linear-gradient(90deg, #ad3838, #ff7081);
   text-align: center;
   line-height: 25px;
   color: white;

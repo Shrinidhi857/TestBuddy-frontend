@@ -3,6 +3,7 @@ import Quizbox from "../components/Quizbox";
 import Taketest from "./Taketest";
 import Stat from "./Stats";
 import QuizUploader from "../components/QuizUploader";
+//import quizData from "../constants/quixlist";
 
 function Main({ page, setPage }) {
   const [quizData, setQuizData] = useState(null);
@@ -40,9 +41,9 @@ function Main({ page, setPage }) {
                   setQuizData={setQuizData}
                   handleQuiz={handleTaketest}
                 />
-                <button onClick={handleTaketest}>button</button>
               </div>
             );
+
           case "taketestpage":
             return (
               <>

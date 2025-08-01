@@ -20,16 +20,16 @@ function Quizbox({ quiz, index, selection, setSelection }) {
   }
 
   function checkColor(option) {
-    if (!selectedOption) return "black";
-    if (option !== selectedOption && option !== answer) return "black";
-    return option === answer ? "green" : "red";
+    if (!selectedOption) return "white";
+    if (option !== selectedOption && option !== answer) return "white";
+    return option === answer ? "#B0FC38" : "#FF7081";
   }
 
   return (
     <div className="QuizBox">
-      <h3>
+      <div className="questionname">
         {number}) {question}
-      </h3>
+      </div>
       <ul>
         {options.map((option, idx) => {
           const label = String.fromCharCode(65 + idx);
