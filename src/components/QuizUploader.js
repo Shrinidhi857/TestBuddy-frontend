@@ -8,18 +8,24 @@ function QuizUploader({
   const [numQuestions, setNumQuestions] = useState(5);
   const [quizData, setQuizData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [textInput, setTextInput] = useState("");
 
-  const handleUpload = async () => {
-    if (!file) {
-      alert("Please select a file first.");
-      return;
-    }
-
+  const handleUpload = async (e) => {
+    e.preventDefault(); // ✅ Fix: Prevent default form submit behavior
     setLoading(true);
 
     try {
-      const text = await file.text();
-      console.log("Text extracted from file");
+      let text = "";
+
+      if (file) {
+        text = await file.text();
+      } else if (textInput.trim()) {
+        text = textInput;
+      } else {
+        alert("Please upload a file or enter text.");
+        setLoading(false);
+        return;
+      }
 
       const prompt = `
 Generate ${numQuestions} multiple-choice questions from the text below.
@@ -61,71 +67,74 @@ Here is the content:
         }
 
         const jsonString = output.substring(jsonStart, jsonEnd);
-        console.log("Raw JSON string:", jsonString);
-
         const parsed = JSON.parse(jsonString);
         setQuizData(parsed);
 
-        if (setParentQuizData) {
-          setParentQuizData(parsed);
-        }
-        if (handleQuizPage) {
-          handleQuizPage();
-        }
+        if (setParentQuizData) setParentQuizData(parsed);
+        if (handleQuizPage) handleQuizPage();
 
         console.log("Quiz data set successfully:", parsed);
       } catch (parseError) {
         console.error("Failed to parse quiz data:", parseError);
-        alert(
-          "Failed to parse quiz. The AI response might not be in the expected format."
-        );
+        alert("Quiz format error. Try simplifying the input.");
       }
     } catch (error) {
       console.error("Error during upload:", error);
-      alert("An error occurred while generating the quiz. Please try again.");
+      alert("Error occurred. Try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="quizinputbox">
-      <h1 className="text-2xl font-bold mb-4">Quiz Generator</h1>
+    <div>
+      <h1 className="text-xl font-bold mb-4">Quiz Generator</h1>
 
-      <div className="space-y-4">
-        <div>
-          <label className="block mb-2 text-sm font-medium">Upload File:</label>
+      <form onSubmit={handleUpload}>
+        {/* File Upload */}
+        <div className="number-compo">
+          <label className="block font-medium">Upload File:</label>
           <input
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
-            className="block w-full text-sm text-gray-300 bg-gray-700 border border-gray-600 rounded-lg cursor-pointer focus:outline-none"
             accept=".txt,.pdf,.doc,.docx"
+            className="block w-full p-2 border border-gray-400 rounded"
           />
         </div>
 
+        {/* OR Textarea Input */}
         <div>
-          <label className="block mb-2 text-sm font-medium">
-            Number of Questions:
-          </label>
+          <textarea
+            rows="6"
+            value={textInput}
+            onChange={(e) => setTextInput(e.target.value)}
+            placeholder="Paste your text here if no file is uploaded..."
+            className="input-form"
+          />
+        </div>
+
+        {/* Number of Questions */}
+        <div className="number-compo">
+          <label>Number of Questions:</label>
           <input
             type="number"
             value={numQuestions}
             onChange={(e) => setNumQuestions(parseInt(e.target.value) || 1)}
-            placeholder="Number of Questions"
             min="1"
             max="20"
-            className="block w-full p-2 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="number-box"
           />
         </div>
 
+        {/* Submit Button */}
         <button
-          onClick={handleUpload}
+          type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-lg"
         >
           {loading ? "Generating Quiz..." : "Generate Quiz"}
         </button>
-      </div>
+      </form>
     </div>
   );
 }
