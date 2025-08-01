@@ -160,7 +160,7 @@ body {
   padding: 25px;
   margin: 10px;
   width: 50vw; /* 30% of the viewport width */
-  height: 30vh;
+  height: max-content;
 }
 .QuizBox .questionname {
   margin-top: 10px;
