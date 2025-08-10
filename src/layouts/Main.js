@@ -31,7 +31,7 @@ function Main({ page, setPage }) {
   }
 
   return (
-    <div className="main">
+    <div className="flex flex-col items-center mt-12  p-1 min-h-[calc(100vh-60px)] dark:bg-primary-dark">
       {(() => {
         switch (page) {
           case "homepage":
@@ -57,7 +57,12 @@ function Main({ page, setPage }) {
                       setSelection={setSelection}
                     />
                   ))}
-                <button onClick={handleQuizSubmit}>Submit</button>
+                <button
+                  className="dark: text-primary-light rounded-xl w-max h-max pl-3 pr-3 pt-2 pb-2 font-medium dark:bg-last-dark border-2 border-last-light mb-3"
+                  onClick={handleQuizSubmit}
+                >
+                  Submit
+                </button>
               </>
             );
           case "statpage":

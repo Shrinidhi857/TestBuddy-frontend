@@ -45,7 +45,7 @@ Here is the content:
       `;
 
       const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyD1_28vu9n-Fn4YfcKdXL7E3AvjuW2pb0c",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAarZQf21RO5ByZtOV7XIBY6fRqfDlknZ4",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

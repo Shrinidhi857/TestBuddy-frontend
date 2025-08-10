@@ -1,7 +1,8 @@
 import { useState } from "react";
+import clsx from "clsx"; // optional, but makes class handling cleaner
 
 function Quizbox({ quiz, index, selection, setSelection }) {
-  const number = index + 1; // display number
+  const number = index + 1;
   const question = quiz.title;
   const options = quiz.options;
   const answer = quiz.answer;
@@ -20,14 +21,14 @@ function Quizbox({ quiz, index, selection, setSelection }) {
   }
 
   function checkColor(option) {
-    if (!selectedOption) return "white";
-    if (option !== selectedOption && option !== answer) return "white";
-    return option === answer ? "#B0FC38" : "#FF7081";
+    if (!selectedOption) return "text-white";
+    if (option !== selectedOption && option !== answer) return "text-white";
+    return option === answer ? "text-[#B0FC38]" : "text-[#FF7081]";
   }
 
   return (
-    <div className="QuizBox">
-      <div className="questionname">
+    <div className="dark:bg-tertiary-dark border-2 border-last-dark rounded-xl p-6 m-2 w-1/2 sm:text-base">
+      <div className="mt-2 mb-1 ml-1 font-semibold text-lg sm:text-base md:text-xl lg:text-xl dark: text-primary-light">
         {number}) {question}
       </div>
       <ul>
@@ -37,11 +38,11 @@ function Quizbox({ quiz, index, selection, setSelection }) {
             <li
               key={option}
               onClick={() => handleClick(option)}
-              style={{
-                color: checkColor(option),
-                cursor: "pointer",
-                listStyle: "none",
-              }}
+              className={clsx(
+                "px-1 py-1 mb-1 rounded-xl cursor-pointer font-medium text-sm",
+                "dark:bg-secondary-dark",
+                checkColor(option)
+              )}
             >
               {label}) {option}
             </li>
