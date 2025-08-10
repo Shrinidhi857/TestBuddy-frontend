@@ -8,9 +8,9 @@ function Quizstatbox({ quiz, index, selection }) {
   const answer = quiz.answer;
 
   function checkColor(option, selectedOption) {
-    if (!selectedOption) return "#ffff";
-    if (option !== selectedOption && option !== answer) return "#ffff";
-    return option === answer ? "#B0FC38" : "#FF7081";
+    if (!selectedOption) return "text-white";
+    if (option !== selectedOption && option !== answer) return "text-white";
+    return option === answer ? "text-[#B0FC38]" : "text-[#FF7081]";
   }
 
   return (
@@ -27,7 +27,7 @@ function Quizstatbox({ quiz, index, selection }) {
               className={clsx(
                 "px-1 py-1 mb-1 rounded-xl cursor-pointer font-medium text-sm",
                 "dark:bg-secondary-dark",
-                checkColor(option)
+                checkColor(option, selection)
               )}
             >
               {label}) {option}
