@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function QuizUploader({
+function FlashUploader({
   setQuizData: setParentQuizData,
   handleQuiz: handleQuizPage,
 }) {
@@ -11,7 +11,7 @@ function QuizUploader({
   const [textInput, setTextInput] = useState("");
 
   const handleUpload = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // ✅ Fix: Prevent default form submit behavior
     setLoading(true);
 
     try {
@@ -42,41 +42,45 @@ Return in this JSON format only (no explanations, no markdown, no extra text):
 
 Here is the content:
 """${text}"""
-    `;
+      `;
 
-      const token = localStorage.getItem("token");
+      const res = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAarZQf21RO5ByZtOV7XIBY6fRqfDlknZ4",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+          }),
+        }
+      );
 
-      const res = await fetch("http://localhost:5000/api/quiz", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ text: prompt }),
-      });
+      const data = await res.json();
+      const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
-      if (!res.ok) {
-        const errText = await res.text(); // Read the error body as text
-        throw new Error(`Server error ${res.status}: ${errText}`);
+      try {
+        const jsonStart = output.indexOf("[");
+        const jsonEnd = output.lastIndexOf("]") + 1;
+
+        if (jsonStart === -1 || jsonEnd === -1) {
+          throw new Error("JSON brackets not found in response.");
+        }
+
+        const jsonString = output.substring(jsonStart, jsonEnd);
+        const parsed = JSON.parse(jsonString);
+        setQuizData(parsed);
+
+        if (setParentQuizData) setParentQuizData(parsed);
+        if (handleQuizPage) handleQuizPage();
+
+        console.log("Quiz data set successfully:", parsed);
+      } catch (parseError) {
+        console.error("Failed to parse quiz data:", parseError);
+        alert("Quiz format error. Try simplifying the input.");
       }
-
-      const contentType = res.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const textBody = await res.text();
-        console.error("Server returned non-JSON:", textBody);
-        throw new Error("Expected JSON but got non-JSON response");
-      }
-
-      const parsed = await res.json();
-      setQuizData(parsed);
-
-      if (setParentQuizData) setParentQuizData(parsed);
-      if (handleQuizPage) handleQuizPage();
-
-      console.log("Quiz data set successfully:", parsed);
     } catch (error) {
       console.error("Error during upload:", error);
-      alert(`Error occurred: ${error.message}`);
+      alert("Error occurred. Try again.");
     } finally {
       setLoading(false);
     }

@@ -1,11 +1,12 @@
 import "../index.css";
 import Quizstatbox from "../components/Quiz-stat-box";
 import clsx from "clsx"; // optional, but makes class handling cleaner
+import { useState } from "react";
 
 function Stats({ props, selection }) {
-  // Calculate correct and wrong answers
   let correct = 0;
   let wrong = 0;
+  const [textInput, setTextInput] = useState("");
 
   for (let i = 0; i < props.length; i++) {
     if (selection[i] === props[i].answer) correct++;
@@ -14,6 +15,31 @@ function Stats({ props, selection }) {
 
   // Calculate percentage of correct answers
   const percent = Math.round((correct / props.length) * 100);
+
+  async function saveQuiz() {
+    if (textInput === "") return;
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:5000/api/quiz/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // <-- add this header
+      },
+      body: JSON.stringify({
+        quizName: textInput,
+        quizes: props,
+      }),
+    });
+
+    if (!res.ok) {
+      alert("not saved");
+    }
+
+    const data = await res.json();
+    alert("saved !");
+    return data;
+  }
 
   return (
     <div className="flex flex-col items-center">
@@ -26,12 +52,12 @@ function Stats({ props, selection }) {
             className="h-max   bg-gradient-to-r from-[#81c784] to-[#b0fc38] text-center leading-[25px] text-white text-[14px] transition-all duration-500 ease-in-out"
             style={{ width: `${percent}%` }}
           >
-            {percent}% Correct
+            {percent}%Correct
           </div>
         </div>
         <div className="w-50 h-max  bg-secondary-light rounded-xl overflow-hidden m-3 border-2 dark: border-tertiary-light">
           <div
-            className="h-max  bg-gradient-to-r from-[##ad3838] to-[##ff7081] text-center leading-[25px] text-white text-[14px] transition-all duration-500 ease-in-out"
+            className="h-max   bg-gradient-to-r from-[##ad3838] to-[##ff7081] text-center leading-[25px] text-white text-[14px] transition-all duration-500 ease-in-out"
             style={{ width: `${100 - percent}%` }}
           >
             {100 - percent}% Wrong
@@ -43,17 +69,32 @@ function Stats({ props, selection }) {
           </span>
           <span style={{ color: "#FF7081" }}>❌ Wrong: {wrong}</span>
         </div>
-      </div>
-      <div>
-        {props.map((quiz, index) => (
-          <Quizstatbox
-            key={index}
-            index={index}
-            quiz={quiz}
-            selection={selection[index]}
+
+        <form className="flex felx-row justify-center mt-3 gap-2">
+          <input
+            type="text"
+            value={textInput}
+            onChange={(e) => setTextInput(e.target.value)}
+            placeholder="Enter name"
+            className="rounded-sm bg-tertiary-light text-secondary-dark  border-3 border-secondary-light "
           />
-        ))}
+          <button
+            className="border-2 bg-gradient-to-r from-[#81c784] to-[#b0fc38] border-[#cefc86] px-3 py-0.5 font-semibold text-md text-primary-light rounded-md"
+            onClick={() => saveQuiz()}
+          >
+            save
+          </button>
+        </form>
       </div>
+
+      {props.map((quiz, index) => (
+        <Quizstatbox
+          key={index}
+          index={index}
+          quiz={quiz}
+          selection={selection[index]}
+        />
+      ))}
     </div>
   );
 }

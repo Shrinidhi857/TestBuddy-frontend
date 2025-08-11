@@ -2,15 +2,26 @@
 import "../index.css";
 import QuizItem from "../components/Items"; // assuming file name is Items.js
 import { useState } from "react";
-import trash from "../assets/trash.svg";
+import FlashItem from "../components/flashItem";
 
-function Sidebar({ curpage, setPage }) {
+function Sidebar({ curpage, setPage, quizView, setQuizView }) {
   const [quizList, setquizList] = useState([]);
   const [showQuiz, showQuizList] = useState(false);
+  const [flashList, setflashList] = useState([]);
+  const [showFlash, setshowFlash] = useState(false);
 
-  function handleShowStats(quiz) {
+  function handleQuizView(quiz) {
+    const selectedQuiz = quiz.quizes;
+    setQuizView(selectedQuiz);
+    setPage("quizview");
     console.log("Clicked quiz:", quiz);
   }
+
+  function handleFlashView(quiz) {
+    setQuizView();
+    console.log("Clicked quiz:", quiz);
+  }
+
   function handleClickItem(page) {
     if (page !== curpage) setPage(page);
   }
@@ -19,6 +30,76 @@ function Sidebar({ curpage, setPage }) {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setPage("login"); // or setIsLoggedIn(false);
+  }
+
+  async function handleDeleteFlashCard(currFlashCardName) {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(
+      "http://localhost:5000/api/flashCard/deleteParticular",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // <-- add this header
+        },
+        body: JSON.stringify({
+          flashgroupName: currFlashCardName,
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch FlashCards");
+    }
+    setflashList((prev) =>
+      prev.filter((flashCard) => flashCard.flashgroupName !== currFlashCardName)
+    );
+    const data = await res.json();
+    console.log(`deleted quiz : ${data}`);
+  }
+
+  async function getAllFlashCards() {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:5000/api/flashCard/getAll", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // <-- add this header
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch quizzes");
+    }
+
+    const data = await res.json();
+    return data;
+  }
+
+  async function handleDeleteQuiz(currQuizName) {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:5000/api/quiz/deleteParticular", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // <-- add this header
+      },
+      body: JSON.stringify({
+        quizName: currQuizName,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch quizzes");
+    }
+    setquizList((prev) =>
+      prev.filter((quiz) => quiz.quizName !== currQuizName)
+    );
+    const data = await res.json();
+    console.log(`deleted quiz : ${data}`);
   }
 
   async function getAllQuizes() {
@@ -66,7 +147,8 @@ function Sidebar({ curpage, setPage }) {
                   <QuizItem
                     quiz={quiz.quizName}
                     key={quiz._id}
-                    handleShowStats={() => handleShowStats(quiz)}
+                    handleShowStats={() => handleQuizView(quiz)}
+                    handleDelete={() => handleDeleteQuiz(quiz.quizName)}
                   />
                 ))
               : null}
@@ -74,7 +156,33 @@ function Sidebar({ curpage, setPage }) {
         </div>
       </div>
       <div className="flex p-1 items-center flex-col cursor-pointer m-0.5 border-2 border-secondary-dark duration-100 hover:shadow-[0_0_10px_#ffffff] rounded-xl">
-        <h2>FlashCards</h2>
+        <div
+          onClick={async () => {
+            setshowFlash(!showFlash);
+            const flashCards = await getAllFlashCards();
+
+            setflashList(flashCards);
+          }}
+        >
+          <h2>FlashCard</h2>
+        </div>
+        <div className="flex flex-row gap-4">
+          <div className="w-3"></div>
+          <ul className=" flex flex-col align-center">
+            {showFlash
+              ? flashList.map((flash) => (
+                  <FlashItem
+                    flashGroupName={flash.flashGroupName}
+                    key={flash._id}
+                    handleShowStats={() => handleFlashView(flash)}
+                    handleDelete={() =>
+                      handleDeleteFlashCard(flash.flashGroupName)
+                    }
+                  />
+                ))
+              : null}
+          </ul>
+        </div>
       </div>
       <div
         className="flex p-1 items-center flex-col cursor-pointer m-0.5 border-2 border-secondary-dark duration-100 hover:shadow-[0_0_10px_#ffffff] rounded-xl"

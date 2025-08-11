@@ -5,8 +5,9 @@ import Stat from "./Stats";
 import QuizUploader from "../components/QuizUploader";
 import FlashCard from "../components/flashCard";
 import flashCards from "../constants/flashCard-format";
+import QuizView from "./QuizView";
 
-function Main({ page, setPage }) {
+function Main({ page, setPage, quizView, setQuizView }) {
   const [quizData, setQuizData] = useState(null);
   const [selection, setSelection] = useState([]);
 
@@ -154,6 +155,9 @@ function Main({ page, setPage }) {
                   })}
               </>
             );
+
+          case "quizview":
+            return <QuizView quizView={quizView} />;
 
           default:
             return null;

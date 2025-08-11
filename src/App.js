@@ -9,7 +9,8 @@ function App() {
   const token = localStorage.getItem("token");
   const [sidebarShow, setsidebarShow] = useState(true);
   console.log(`✅ ${token}`);
-  const [page, setPage] = useState("login"); // lowercase for consistency
+  const [page, setPage] = useState("login");
+  const [quizView, setQuizView] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -40,8 +41,20 @@ function App() {
   return (
     <>
       <Navbar sidebarControll={setsidebarShow} sidebar={sidebarShow} />
-      {sidebarShow && <Sidebar page={page} setPage={setPage} />}
-      <Main page={page} setPage={setPage} />
+      {sidebarShow && (
+        <Sidebar
+          page={page}
+          setPage={setPage}
+          quizView={quizView}
+          setQuizView={setQuizView}
+        />
+      )}
+      <Main
+        page={page}
+        setPage={setPage}
+        quizView={quizView}
+        setQuizView={setQuizView}
+      />
     </>
   );
 }

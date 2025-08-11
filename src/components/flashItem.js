@@ -1,10 +1,10 @@
 // src/components/Items.js
 import "../index.css";
 
-function QuizItem({ quiz, handleShowStats, handleDelete }) {
+function FlashItem({ flashGroupName, handleShowStats, handleDelete }) {
   return (
-    <div className="dark:bg-primary-dark  rounded-md p-1 text-secondary-light m-0.5 w-full cursor-pointer m-0.5 border-2 border-secondary-dark duration-100 hover:shadow-[0_0_5px_#ffffff]  hover:border-secondary-light rounded-xl  flex flex-row justify-between p-1">
-      <h3 onClick={handleShowStats}>{quiz}</h3>
+    <div className="dark:bg-primary-dark  rounded-md p-1 text-secondary-light  w-full cursor-pointer m-0.5 border-2 border-secondary-dark duration-100 hover:shadow-[0_0_5px_#ffffff]  hover:border-secondary-light rounded-xl  flex flex-row justify-between p-1">
+      <h3 onClick={handleShowStats}>{flashGroupName}</h3>
       <div onClick={handleDelete}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -23,4 +23,4 @@ function QuizItem({ quiz, handleShowStats, handleDelete }) {
   );
 }
 
-export default QuizItem;
+export default FlashItem;
