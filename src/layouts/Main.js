@@ -6,6 +6,7 @@ import QuizUploader from "../components/QuizUploader";
 import FlashCard from "../components/flashCard";
 import flashCards from "../constants/flashCard-format";
 import QuizView from "./QuizView";
+import Homepage from "./Home";
 
 function Main({ page, setPage, quizView, setQuizView }) {
   const [quizData, setQuizData] = useState(null);
@@ -101,6 +102,18 @@ function Main({ page, setPage, quizView, setQuizView }) {
       {(() => {
         switch (page) {
           case "homepage":
+            return <Homepage />;
+
+          case "quizpage":
+            return (
+              <div style={{ display: "flex" }}>
+                <QuizUploader
+                  setQuizData={setQuizData}
+                  handleQuiz={handleTaketest}
+                />
+              </div>
+            );
+          case "flashpage":
             return (
               <div style={{ display: "flex" }}>
                 <QuizUploader

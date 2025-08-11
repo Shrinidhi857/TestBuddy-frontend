@@ -5,13 +5,13 @@ function FlashUploader({
   handleQuiz: handleQuizPage,
 }) {
   const [file, setFile] = useState(null);
-  const [numQuestions, setNumQuestions] = useState(5);
+  const [numFlashCards, setNumFlashCards] = useState(5);
   const [quizData, setQuizData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [textInput, setTextInput] = useState("");
 
   const handleUpload = async (e) => {
-    e.preventDefault(); // ✅ Fix: Prevent default form submit behavior
+    e.preventDefault();
     setLoading(true);
 
     try {
@@ -28,59 +28,43 @@ function FlashUploader({
       }
 
       const prompt = `
-Generate ${numQuestions} multiple-choice questions from the text below.
-Return in this JSON format only (no explanations, no markdown, no extra text):
-
-[
-  {
-    "no": 1,
-    "title": "Question text here",
-    "options": ["Option A", "Option B", "Option C", "Option D"],
-    "answer": "Option A"
-  }
-]
-
-Here is the content:
+Generate ${numFlashCards} flashcards from the text below.\nReturn in this JSON format only (no explanations, no markdown, no extra text):\n\n[\n  {\n    \"no\": 1,\n    \"front\": \"Question or prompt here\",\n    \"back\": \"Answer here\"\n  }\n]\n\nHere is the content:
 """${text}"""
-      `;
+    `;
 
-      const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAarZQf21RO5ByZtOV7XIBY6fRqfDlknZ4",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-          }),
-        }
-      );
+      const token = localStorage.getItem("token");
 
-      const data = await res.json();
-      const output = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      const res = await fetch("http://localhost:5000/api/flashCard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ text: prompt }),
+      });
 
-      try {
-        const jsonStart = output.indexOf("[");
-        const jsonEnd = output.lastIndexOf("]") + 1;
-
-        if (jsonStart === -1 || jsonEnd === -1) {
-          throw new Error("JSON brackets not found in response.");
-        }
-
-        const jsonString = output.substring(jsonStart, jsonEnd);
-        const parsed = JSON.parse(jsonString);
-        setQuizData(parsed);
-
-        if (setParentQuizData) setParentQuizData(parsed);
-        if (handleQuizPage) handleQuizPage();
-
-        console.log("Quiz data set successfully:", parsed);
-      } catch (parseError) {
-        console.error("Failed to parse quiz data:", parseError);
-        alert("Quiz format error. Try simplifying the input.");
+      if (!res.ok) {
+        const errText = await res.text(); // Read the error body as text
+        throw new Error(`Server error ${res.status}: ${errText}`);
       }
+
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const textBody = await res.text();
+        console.error("Server returned non-JSON:", textBody);
+        throw new Error("Expected JSON but got non-JSON response");
+      }
+
+      const parsed = await res.json();
+      setQuizData(parsed);
+
+      if (setParentQuizData) setParentQuizData(parsed);
+      if (handleQuizPage) handleQuizPage();
+
+      console.log("Quiz data set successfully:", parsed);
     } catch (error) {
       console.error("Error during upload:", error);
-      alert("Error occurred. Try again.");
+      alert(`Error occurred: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -89,7 +73,7 @@ Here is the content:
   return (
     <div className="ml-10">
       <h1 className="text-xl font-bold mb-4 text-primary-light">
-        Quiz Generator
+        Flash Generator
       </h1>
 
       <form onSubmit={handleUpload}>
@@ -115,11 +99,11 @@ Here is the content:
 
         {/* Number of Questions */}
         <div className="flex flex-row font-medium text-medium items-center justify-center border-2 rounded-xl mt-2 mb-2 p-1 bg-tertiary-dark text-secondary-light gap-2 border-last-dark">
-          <label>Number of Questions:</label>
+          <label>Number of Flash Cards:</label>
           <input
             type="number"
-            value={numQuestions}
-            onChange={(e) => setNumQuestions(parseInt(e.target.value) || 1)}
+            value={numFlashCards}
+            onChange={(e) => setNumFlashCards(parseInt(e.target.value) || 1)}
             min="1"
             max="20"
             className="rounded-xl pt-1 pb-1 font-semibold  border-2 bg-secondary-dark text-secondary-light border-last-dark focus:border-[#8fd9fb] outline-none "
@@ -139,4 +123,4 @@ Here is the content:
   );
 }
 
-export default QuizUploader;
+export default FlashUploader;
