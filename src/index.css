@@ -3,3 +3,36 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+/* 3D Flip Helpers */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.flip-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 0.6s;
+}
+
+.flip-inner.rotate-y-180 {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+/* front & back faces */
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+/* small perf hint (optional) */
+.will-change-transform {
+  will-change: transform;
+}

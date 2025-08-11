@@ -10,6 +10,8 @@ function Main({ page, setPage }) {
   const [quizData, setQuizData] = useState(null);
   const [selection, setSelection] = useState([]);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     if (quizData) {
       setSelection(new Array(quizData.length).fill(null));
@@ -32,15 +34,60 @@ function Main({ page, setPage }) {
   }
 
   const color = [
-    { front: "bg-[#DA3F45]", back: "text-[#DCDEDF]" },
-    { front: "bg-[#F6B750]", back: "text-[#1E2327]" },
-    { front: "bg-[#061A74]", back: "text-[#B99F5D]" },
-    { front: "bg-[#A21328]", back: "text-[#E9C576]" },
-    { front: "bg-[#DC1B2E]", back: "text-[#DCDC30]" },
-    { front: "bg-[#F9F9F9]", back: "text-[#169DCB]" },
-    { front: "bg-[#E9B661]", back: "text-[#7E5072]" },
-    { front: "bg-[#552E7D]", back: "text-[#FFB866]" },
-    { front: "bg-[#211463]", back: "text-[#C95874]" },
+    {
+      frontbg: "bg-[#DA3F45]",
+      fronttext: "text-[#DCDEDF]",
+      backtext: "text-[#DA3F45]",
+      backbg: "bg-[#DCDEDF]",
+    },
+    {
+      frontbg: "bg-[#F6B750]",
+      fronttext: "text-[#1E2327]",
+      backtext: "text-[#F6B750]",
+      backbg: "bg-[#1E2327]",
+    },
+    {
+      frontbg: "bg-[#061A74]",
+      fronttext: "text-[#B99F5D]",
+      backtext: "text-[#061A74]",
+      backbg: "bg-[#B99F5D]",
+    },
+    {
+      frontbg: "bg-[#A21328]",
+      fronttext: "text-[#E9C576]",
+      backtext: "text-[#A21328]",
+      backbg: "bg-[#E9C576]",
+    },
+    {
+      frontbg: "bg-[#DC1B2E]",
+      fronttext: "text-[#DCDC30]",
+      backtext: "text-[#DC1B2E]",
+      backbg: "bg-[#DCDC30]",
+    },
+    {
+      frontbg: "bg-[#F9F9F9]",
+      fronttext: "text-[#169DCB]",
+      backtext: "text-[#F9F9F9]",
+      backbg: "bg-[#169DCB]",
+    },
+    {
+      frontbg: "bg-[#E9B661]",
+      fronttext: "text-[#7E5072]",
+      backtext: "text-[#E9B661]",
+      backbg: "bg-[#7E5072]",
+    },
+    {
+      frontbg: "bg-[#552E7D]",
+      fronttext: "text-[#FFB866]",
+      backtext: "text-[#552E7D]",
+      backbg: "bg-[#FFB866]",
+    },
+    {
+      frontbg: "bg-[#211463]",
+      fronttext: "text-[#C95874]",
+      backtext: "text-[#211463]",
+      backbg: "bg-[#C95874]",
+    },
   ];
 
   function getRandomColor() {
@@ -96,10 +143,12 @@ function Main({ page, setPage }) {
                     return (
                       <FlashCard
                         key={index}
+                        frontbg={randomColor.frontbg}
+                        fronttext={randomColor.fronttext}
+                        backbg={randomColor.backbg}
+                        backtext={randomColor.backtext}
                         front={card.front}
                         back={card.back}
-                        bg={randomColor.front}
-                        text={randomColor.back}
                       />
                     );
                   })}
