@@ -4,7 +4,7 @@ import Main from "./layouts/Main";
 import { useState } from "react";
 
 function App() {
-  const [page, setPage] = useState("homepage");
+  const [page, setPage] = useState("flashCard");
 
   return (
     <>

@@ -87,34 +87,34 @@ Here is the content:
   };
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Quiz Generator</h1>
+    <div className="ml-10">
+      <h1 className="text-xl font-bold mb-4 text-primary-light">
+        Quiz Generator
+      </h1>
 
       <form onSubmit={handleUpload}>
         {/* File Upload */}
-        <div className="number-compo">
+        <div className="flex flex-row font-medium font-xl items-center justify-center border-2 dark:border-tertiary-dark rounded-xl mt-2 mb-2 p-2 bg-secondary-dark text-primary-light gap-2">
           <label className="block font-medium">Upload File:</label>
           <input
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
             accept=".txt,.pdf,.doc,.docx"
-            className="block w-full p-2 border border-gray-400 rounded"
+            className="block w-full p-2 border-2 border-last-dark rounded-xl"
           />
         </div>
 
         {/* OR Textarea Input */}
-        <div>
-          <textarea
-            rows="6"
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
-            placeholder="Paste your text here if no file is uploaded..."
-            className="input-form"
-          />
-        </div>
+        <textarea
+          rows="6"
+          value={textInput}
+          onChange={(e) => setTextInput(e.target.value)}
+          placeholder="Paste your text here if no file is uploaded..."
+          className="flex min-h-20 w-full rounded-xl border-2 border-last-dark  dark:bg-secondary-dark dark:text-secondary-light p-2 hover:border-[#8fd9fb] active:border-[#8fd9fb]  "
+        />
 
         {/* Number of Questions */}
-        <div className="number-compo">
+        <div className="flex flex-row font-medium text-medium items-center justify-center border-2 rounded-xl mt-2 mb-2 p-1 bg-tertiary-dark text-secondary-light gap-2 border-last-dark">
           <label>Number of Questions:</label>
           <input
             type="number"
@@ -122,7 +122,7 @@ Here is the content:
             onChange={(e) => setNumQuestions(parseInt(e.target.value) || 1)}
             min="1"
             max="20"
-            className="number-box"
+            className="rounded-xl pt-1 pb-1 font-semibold  border-2 bg-secondary-dark text-secondary-light border-last-dark focus:border-[#8fd9fb] outline-none "
           />
         </div>
 
@@ -130,7 +130,7 @@ Here is the content:
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-lg"
+          className="dark: text-primary-light rounded-xl w-max h-max pl-3 pr-3 pt-2 pb-2 font-medium dark:bg-tertiary-dark border-2 border-last-dark mb-3"
         >
           {loading ? "Generating Quiz..." : "Generate Quiz"}
         </button>
