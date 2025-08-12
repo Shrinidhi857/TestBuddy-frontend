@@ -20,17 +20,20 @@ function Stats({ props, selection }) {
     if (textInput === "") return;
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/quiz/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // <-- add this header
-      },
-      body: JSON.stringify({
-        quizName: textInput,
-        quizes: props,
-      }),
-    });
+    const res = await fetch(
+      "https://testbuddy-backend-lag4.onrender.com/api/quiz/save",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // <-- add this header
+        },
+        body: JSON.stringify({
+          quizName: textInput,
+          quizes: props,
+        }),
+      }
+    );
 
     if (!res.ok) {
       alert("not saved");

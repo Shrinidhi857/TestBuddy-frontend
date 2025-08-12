@@ -31,14 +31,17 @@ Generate ${numFlashCards} flashcards from the text below.\nReturn in this JSON f
 
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/flashCard", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ text: prompt }),
-      });
+      const res = await fetch(
+        "https://testbuddy-backend-lag4.onrender.com/api/flashCard",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ text: prompt }),
+        }
+      );
 
       if (!res.ok) {
         const errText = await res.text(); // Read the error body as text

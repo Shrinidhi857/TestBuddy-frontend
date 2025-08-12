@@ -46,14 +46,17 @@ Here is the content:
 
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/quiz", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ text: prompt }),
-      });
+      const res = await fetch(
+        "https://testbuddy-backend-lag4.onrender.com/api/quiz",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ text: prompt }),
+        }
+      );
 
       if (!res.ok) {
         const errText = await res.text(); // Read the error body as text

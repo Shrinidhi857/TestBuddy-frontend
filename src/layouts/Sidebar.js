@@ -44,7 +44,7 @@ function Sidebar({
     const token = localStorage.getItem("token");
 
     const res = await fetch(
-      "http://localhost:5000/api/flashCard/deleteParticular",
+      "https://testbuddy-backend-lag4.onrender.com/api/flashCard/deleteParticular",
       {
         method: "POST",
         headers: {
@@ -70,13 +70,16 @@ function Sidebar({
   async function getAllFlashCards() {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/flashCard/getAll", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // <-- add this header
-      },
-    });
+    const res = await fetch(
+      "https://testbuddy-backend-lag4.onrender.com/api/flashCard/getAll",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // <-- add this header
+        },
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch quizzes");
@@ -89,16 +92,19 @@ function Sidebar({
   async function handleDeleteQuiz(currQuizName) {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/quiz/deleteParticular", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // <-- add this header
-      },
-      body: JSON.stringify({
-        quizName: currQuizName,
-      }),
-    });
+    const res = await fetch(
+      "https://testbuddy-backend-lag4.onrender.com/api/quiz/deleteParticular",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // <-- add this header
+        },
+        body: JSON.stringify({
+          quizName: currQuizName,
+        }),
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch quizzes");
@@ -113,13 +119,16 @@ function Sidebar({
   async function getAllQuizes() {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/quiz/getAll", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // <-- add this header
-      },
-    });
+    const res = await fetch(
+      "https://testbuddy-backend-lag4.onrender.com/api/quiz/getAll",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // <-- add this header
+        },
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch quizzes");

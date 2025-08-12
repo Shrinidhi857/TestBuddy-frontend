@@ -73,17 +73,20 @@ function FlashResult({ props }) {
     if (textInput === "") return;
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/flashCard/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // <-- add this header
-      },
-      body: JSON.stringify({
-        flashgroupName: textInput,
-        flashCards: props,
-      }),
-    });
+    const res = await fetch(
+      "https://testbuddy-backend-lag4.onrender.com/api/flashCard/save",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // <-- add this header
+        },
+        body: JSON.stringify({
+          flashgroupName: textInput,
+          flashCards: props,
+        }),
+      }
+    );
 
     if (!res.ok) {
       alert("not saved");
