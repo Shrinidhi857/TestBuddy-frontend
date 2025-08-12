@@ -17,7 +17,6 @@ function Stats({ props, selection }) {
   const percent = Math.round((correct / props.length) * 100);
 
   async function saveQuiz() {
-    if (textInput === "") return;
     const token = localStorage.getItem("token");
 
     const res = await fetch(
