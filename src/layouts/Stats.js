@@ -60,7 +60,7 @@ function Stats({ props, selection }) {
         </div>
         <div className="w-50 h-max  bg-secondary-light rounded-xl overflow-hidden m-3 border-2 dark: border-tertiary-light">
           <div
-            className="h-max   bg-gradient-to-r from-[##ad3838] to-[##ff7081] text-center leading-[25px] text-white text-[14px] transition-all duration-500 ease-in-out"
+            className="h-max   bg-gradient-to-r from-[#ad3838] to-[#ff7081] text-center leading-[25px] text-white text-[14px] transition-all duration-500 ease-in-out"
             style={{ width: `${100 - percent}%` }}
           >
             {100 - percent}% Wrong
