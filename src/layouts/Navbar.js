@@ -25,7 +25,7 @@ function Navbar({ sidebarControll, sidebar }) {
         </div>
         <img src={logo} alt="logo" className="h-7 w-auto"></img>
       </div>
-      <h1 className="m-0 text-xl font-bold">Intellitest</h1>
+      <h1 className="m-0 text-xl font-bold">TestBuddy</h1>
     </div>
   );
 }

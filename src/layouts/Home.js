@@ -4,14 +4,11 @@ import flashImage from "../assets/flashImage.png";
 function Homepage({ handleQuizPage, handleFlashPage }) {
   return (
     <div className="flex flex-col mt-20 gap-10 w-full">
-      {/* Heading */}
       <div className="flex justify-center">
-        <h1 className="text-primary-light font-bold text-5xl">Intellitest</h1>
+        <h1 className="text-primary-light font-bold text-5xl">TestBuddy</h1>
       </div>
 
-      {/* Card Container */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-10 px-6 min-h-[calc(100vh-200px)] dark:bg-primary-dark">
-        {/* Card 1 */}
         <div
           className="bg-secondary-dark text-xl border-2 border-white flex flex-col text-primary-light rounded-xl overflow-hidden font-bold w-full sm:w-64 md:w-72 lg:w-80 max-w-xs"
           onClick={() => handleQuizPage()}
@@ -30,7 +27,6 @@ function Homepage({ handleQuizPage, handleFlashPage }) {
           </p>
         </div>
 
-        {/* Card 2 */}
         <div
           className="bg-secondary-dark text-xl border-2 border-white flex flex-col text-primary-light rounded-xl overflow-hidden font-bold w-full sm:w-64 md:w-72 lg:w-80 max-w-xs"
           onClick={() => handleFlashPage()}
