@@ -17,11 +17,14 @@ function Register({ onLoginSuccess, onSwitchToLogin }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/users/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const res = await fetch(
+        "https://testbuddy-backend-lag4.onrender.com/api/users/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Registration failed");
