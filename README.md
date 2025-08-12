@@ -1,13 +1,13 @@
-# TestMINT
+# TestBuddy
 
-TestMINT is a modern web application built with **React**, **JavaScript**, and **CSS**, integrated with **Google Gemini Flash 2.0** (LLM) for intelligent quiz generation from uploaded PDFs. Designed for simplicity and speed, TestMINT enables users to generate dynamic quizzes with minimal input.
+TestBuddy is a modern web application built with **React**, **JavaScript**, and **CSS**, integrated with **Google Gemini Flash 2.0** (LLM) for intelligent quiz generation from uploaded PDFs. Designed for simplicity and speed, TestMINT enables users to generate dynamic quizzes with minimal input. it allows users to upload the pdf files ,to get quizes and flashCards.
 
 ---
 
 ## 🧰 Tech Stack
 
 - **Frontend**: React (CRA)
-- **Styling**: CSS
+- **Styling**: Tailwind css
 - **Language**: JavaScript
 - **AI Model**: [Google Gemini Flash 2.0](https://deepmind.google/technologies/gemini/)
 - **State Management**: React Hooks
@@ -16,7 +16,7 @@ TestMINT is a modern web application built with **React**, **JavaScript**, and *
 
 ## ✨ Features
 
-- 📄 Upload PDF and generate quizzes using Gemini Flash LLM
+- 📄 Upload PDF and generate quizzes and Flash Cards using Gemini Flash LLM
 - ⚡ Input desired number of questions and get instant JSON quiz format
 - 🧠 LLM-powered quiz generation
 - 🎨 Clean UI with CSS styling
@@ -29,8 +29,13 @@ TestMINT is a modern web application built with **React**, **JavaScript**, and *
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/Shrinidhi857/TestMint.git
-cd TestMint
+git clone https://github.com/Shrinidhi857/TestBuddy-frontend.git
+cd TestBuddy-frontend
+```
+
+```bash
+git clone https://github.com/Shrinidhi857/TestBuddy-backend.git
+cd TestBuddy-frontend
 ```
 
 ### 2. Install dependencies
@@ -48,31 +53,3 @@ npm start
 > Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
-
-## 🤖 Gemini Flash 2.0 Integration
-
-We use the Gemini Flash LLM to convert PDF files into structured quiz data in JSON. On button click:
-
-1. User uploads a PDF.
-2. User inputs number of questions.
-3. Frontend calls Gemini API and returns JSON.
-
-Example Output:
-
-```json
-[
-  {
-    "no": 1,
-    "title": "Which is the correct syntax for declaring a React component?",
-    "options": ["function()", "component()", "render()", "newComponent()"],
-    "answer": "function()"
-  },
-  ...
-]
-```
-
----
-
-![first page](img-1.png)
-![seconpage](img-2.png)
-![stat page](img-3.png)
