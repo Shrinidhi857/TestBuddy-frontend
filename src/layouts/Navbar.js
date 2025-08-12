@@ -1,5 +1,5 @@
 import "../index.css";
-import logo from "../assets/T.png";
+import logo from "../assets/T-d.png";
 import sidebar from "../assets/sidebar.svg";
 
 function Navbar({ sidebarControll, sidebar }) {
@@ -25,7 +25,7 @@ function Navbar({ sidebarControll, sidebar }) {
         </div>
         <img src={logo} alt="logo" className="h-7 w-auto"></img>
       </div>
-      <h1 className="m-0 text-xl">TestMint</h1>
+      <h1 className="m-0 text-xl font-bold">Intellitest</h1>
     </div>
   );
 }

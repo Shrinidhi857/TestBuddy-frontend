@@ -7,9 +7,20 @@ import FlashCard from "../components/flashCard";
 import flashCards from "../constants/flashCard-format";
 import QuizView from "./QuizView";
 import Homepage from "./Home";
+import FlashUploader from "../components/FlashUpload";
+import FlashResult from "./FlashResult";
 
-function Main({ page, setPage, quizView, setQuizView }) {
+function Main({
+  page,
+  setPage,
+  quizView,
+  setQuizView,
+  flashView,
+  setFlashView,
+}) {
   const [quizData, setQuizData] = useState(null);
+  const [flashData, setFlashData] = useState(null);
+
   const [selection, setSelection] = useState([]);
 
   const token = localStorage.getItem("token");
@@ -20,12 +31,18 @@ function Main({ page, setPage, quizView, setQuizView }) {
     }
   }, [quizData]);
 
-  function handleUpload() {
-    console.log("file upload here");
-  }
-
   function handleTaketest() {
     setPage("taketestpage");
+  }
+  function handleFlashtest() {
+    setPage("flashCardStat");
+  }
+
+  function handleflashpage() {
+    setPage("flashpage");
+  }
+  function handlequizpage() {
+    setPage("quizpage");
   }
 
   function handleQuizSubmit() {
@@ -102,7 +119,12 @@ function Main({ page, setPage, quizView, setQuizView }) {
       {(() => {
         switch (page) {
           case "homepage":
-            return <Homepage />;
+            return (
+              <Homepage
+                handleQuizPage={handlequizpage}
+                handleFlashPage={handleflashpage}
+              />
+            );
 
           case "quizpage":
             return (
@@ -116,9 +138,9 @@ function Main({ page, setPage, quizView, setQuizView }) {
           case "flashpage":
             return (
               <div style={{ display: "flex" }}>
-                <QuizUploader
-                  setQuizData={setQuizData}
-                  handleQuiz={handleTaketest}
+                <FlashUploader
+                  setFlashData={setFlashData}
+                  handleFlash={handleFlashtest}
                 />
               </div>
             );
@@ -168,6 +190,9 @@ function Main({ page, setPage, quizView, setQuizView }) {
                   })}
               </>
             );
+
+          case "flashCardStat":
+            return <FlashResult props={flashData} />;
 
           case "quizview":
             return <QuizView quizView={quizView} />;

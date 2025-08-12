@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 
-function FlashUploader({
-  setQuizData: setParentQuizData,
-  handleQuiz: handleQuizPage,
-}) {
+function FlashUploader({ setFlashData, handleFlash }) {
   const [file, setFile] = useState(null);
   const [numFlashCards, setNumFlashCards] = useState(5);
-  const [quizData, setQuizData] = useState([]);
+  const [flashData, setflashData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [textInput, setTextInput] = useState("");
 
@@ -56,12 +53,12 @@ Generate ${numFlashCards} flashcards from the text below.\nReturn in this JSON f
       }
 
       const parsed = await res.json();
-      setQuizData(parsed);
+      setflashData(parsed);
 
-      if (setParentQuizData) setParentQuizData(parsed);
-      if (handleQuizPage) handleQuizPage();
+      if (setFlashData) setFlashData(parsed);
+      if (handleFlash) handleFlash();
 
-      console.log("Quiz data set successfully:", parsed);
+      console.log("Flashdata set successfully:", parsed);
     } catch (error) {
       console.error("Error during upload:", error);
       alert(`Error occurred: ${error.message}`);
@@ -73,7 +70,7 @@ Generate ${numFlashCards} flashcards from the text below.\nReturn in this JSON f
   return (
     <div className="ml-10">
       <h1 className="text-xl font-bold mb-4 text-primary-light">
-        Flash Generator
+        FlashCards Generator
       </h1>
 
       <form onSubmit={handleUpload}>
@@ -116,7 +113,7 @@ Generate ${numFlashCards} flashcards from the text below.\nReturn in this JSON f
           disabled={loading}
           className="dark: text-primary-light rounded-xl w-max h-max pl-3 pr-3 pt-2 pb-2 font-medium dark:bg-tertiary-dark border-2 border-last-dark mb-3"
         >
-          {loading ? "Generating Quiz..." : "Generate Quiz"}
+          {loading ? "Generating Flashs..." : "Generate Cards"}
         </button>
       </form>
     </div>

@@ -4,7 +4,14 @@ import QuizItem from "../components/Items"; // assuming file name is Items.js
 import { useState } from "react";
 import FlashItem from "../components/flashItem";
 
-function Sidebar({ curpage, setPage, quizView, setQuizView }) {
+function Sidebar({
+  curpage,
+  setPage,
+  quizView,
+  setQuizView,
+  flashView,
+  setFlashView,
+}) {
   const [quizList, setquizList] = useState([]);
   const [showQuiz, showQuizList] = useState(false);
   const [flashList, setflashList] = useState([]);
@@ -17,9 +24,10 @@ function Sidebar({ curpage, setPage, quizView, setQuizView }) {
     console.log("Clicked quiz:", quiz);
   }
 
-  function handleFlashView(quiz) {
-    setQuizView();
-    console.log("Clicked quiz:", quiz);
+  function handleFlashView(flash) {
+    setFlashView(flash);
+    setPage("flashCard");
+    console.log("Clicked Flash:", flash);
   }
 
   function handleClickItem(page) {
@@ -53,7 +61,7 @@ function Sidebar({ curpage, setPage, quizView, setQuizView }) {
       throw new Error("Failed to fetch FlashCards");
     }
     setflashList((prev) =>
-      prev.filter((flashCard) => flashCard.flashgroupName !== currFlashCardName)
+      prev.filter((flashCard) => flashCard.flashGroupName !== currFlashCardName)
     );
     const data = await res.json();
     console.log(`deleted quiz : ${data}`);
@@ -122,7 +130,7 @@ function Sidebar({ curpage, setPage, quizView, setQuizView }) {
   }
 
   return (
-    <div className="hidden sm:block fixed top-12 left-0 min-w-max dark:bg-secondary-dark dark:text-secondary-light  h-full p-0.5 overflow-auto  font-medium gap-2 p-3">
+    <div className="hidden sm:block fixed top-12 left-0 min-w-max dark:bg-secondary-dark dark:text-secondary-light  h-full p-0.5 overflow-auto  font-medium gap-2 p-3 z-30">
       <div
         className="flex p-1 items-center  flex-col cursor-pointer m-0.5 border-2 border-secondary-dark duration-100 hover:shadow-[0_0_5px_#ffffff]  hover:border-secondary-light rounded-xl"
         onClick={() => handleClickItem("homepage")}

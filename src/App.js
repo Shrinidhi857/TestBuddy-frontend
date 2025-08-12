@@ -11,6 +11,7 @@ function App() {
   console.log(`✅ ${token}`);
   const [page, setPage] = useState("login");
   const [quizView, setQuizView] = useState([]);
+  const [flashView, setFlashView] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,6 +48,8 @@ function App() {
           setPage={setPage}
           quizView={quizView}
           setQuizView={setQuizView}
+          flashView={flashView}
+          setFlashView={setFlashView}
         />
       )}
       <Main
@@ -54,6 +57,8 @@ function App() {
         setPage={setPage}
         quizView={quizView}
         setQuizView={setQuizView}
+        flashView={flashView}
+        setFlashView={setFlashView}
       />
     </>
   );
