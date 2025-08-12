@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          light: "#ffffff", // blue-500 light
-          dark: "#000000", // blue-600 dark
+          light: "#ffffff",
+          dark: "#000000",
         },
         secondary: {
           light: "#dedede",
@@ -24,21 +24,22 @@ module.exports = {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
-    },
 
-    keyframes: {
-      fadeIn: {
-        "0%": { opacity: "0" },
-        "100%": { opacity: "1" },
+      // ✅ Put your custom animations here
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
       },
-      fadeOut: {
-        "0%": { opacity: "1" },
-        "100%": { opacity: "0" },
+      animation: {
+        fadeIn: "fadeIn 1s ease-in forwards",
+        fadeOut: "fadeOut 1s ease-out forwards",
       },
-    },
-    animation: {
-      fadeIn: "fadeIn 1s ease-in forwards",
-      fadeOut: "fadeOut 1s ease-out forwards",
     },
   },
   plugins: [],

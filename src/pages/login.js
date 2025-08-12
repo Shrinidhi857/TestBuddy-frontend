@@ -6,9 +6,11 @@ function Login({ onLoginSuccess, onSwitchToRegister }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   async function handleLogin(e) {
     e.preventDefault();
+    setLoading(false);
     try {
       const res = await fetch(
         "https://testbuddy-backend-lag4.onrender.com/api/users/login",
@@ -28,27 +30,30 @@ function Login({ onLoginSuccess, onSwitchToRegister }) {
     } catch (err) {
       setError(err.message);
     }
+    setLoading(true);
   }
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-black">
-      <div className="max-w-sm mx-auto bg-gray-300 rounded-xl overflow-hidden shadow-lg p-6">
-        <div className="w-max h-max h-full rounded-2xl z-10 flex flex-col items-center justify-start pt-10 gap-5">
-          <h1 className="text-2xl text-black font-bold">Welcome Back</h1>
+      <div className="max-w-sm mx-auto bg-secondary-dark rounded-xl overflow-hidden shadow-lg p-6">
+        <div className="w-max  h-full rounded-2xl z-10 flex flex-col items-center justify-start pt-10 gap-5">
+          <h1 className="text-2xl text-primary-light font-bold">
+            Welcome Back!
+          </h1>
           <form
             className="gap-5 flex flex-col w-full px-4"
             onSubmit={handleLogin}
           >
             <input
               type="text"
-              className="border-2 border-gray-500 rounded-xl text-xl p-2 text-black"
+              className="border-2 border-last-light rounded-xl text-xl p-2 text-black"
               placeholder="Username..."
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
               type="password"
-              className="border-2 border-gray-500 rounded-xl text-xl p-2 text-black"
+              className="border-2 border-last-light rounded-xl text-xl p-2 text-black"
               placeholder="Password..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -57,24 +62,31 @@ function Login({ onLoginSuccess, onSwitchToRegister }) {
               className="border-2 border-gray-500 rounded-xl p-2 text-black font-semibold"
               type="submit"
             >
-              <div className="flex flex-row gap-2  justify-center">Submit</div>
+              {(loading && (
+                <div className="flex flex-row gap-2  justify-center text-secondary-light">
+                  Login
+                </div>
+              )) || (
+                <div className="flex flex-row justify-center">
+                  <div className="w-7 h-7 border-4 border-secondary-light border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
             </button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
             <div className="flex flex-row justify-evenly">
-              <button className="border-2 border-gray-500 rounded-xl p-2 text-black font-semibold">
+              <button className="border-2 border-last-light bg-tertiary-dark text-tertiary-light rounded-xl p-2  font-semibold">
                 <div className="flex flex-row gap-2  items-center">
                   <img src={googleIcon} alt="google" className="w-8 h-8" />
                   <div>Google</div>
                 </div>
               </button>
-              <button className="border-2 border-gray-500 rounded-xl p-2 text-black font-semibold">
+              <button className="border-2 border-last-light bg-tertiary-dark text-tertiary-light rounded-xl p-2 font-semibold">
                 <div className="flex flex-row gap-2  items-center">
                   <img src={githubIcon} alt="github" className="w-8 h-8" />
                   <div className="">Github</div>
                 </div>
               </button>
             </div>
-            <p className="font-semibold">
+            <p className="font-semibold text-secondary-light">
               Don't have an account?
               <span
                 className="text-blue-600 cursor-pointer underline"
