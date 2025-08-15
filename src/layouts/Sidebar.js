@@ -176,17 +176,19 @@ function Sidebar({
           {!loadqQuiz && (
             <ul className=" flex flex-col align-center">
               {showQuiz ? (
-                quizList.map((quiz) => (
-                  <QuizItem
-                    quiz={quiz.quizName}
-                    key={quiz._id}
-                    handleShowStats={() => handleQuizView(quiz)}
-                    handleDelete={() => handleDeleteQuiz(quiz.quizName)}
-                  />
-                ))
-              ) : (
-                <EmptyItem />
-              )}
+                quizList.length > 0 ? (
+                  quizList.map((quiz) => (
+                    <QuizItem
+                      quiz={quiz.quizName}
+                      key={quiz._id}
+                      handleShowStats={() => handleQuizView(quiz)}
+                      handleDelete={() => handleDeleteQuiz(quiz.quizName)}
+                    />
+                  ))
+                ) : (
+                  <EmptyItem />
+                )
+              ) : null}
             </ul>
           )}
         </div>
@@ -211,19 +213,21 @@ function Sidebar({
           {!loadflash && (
             <ul className=" flex flex-col align-center">
               {showFlash ? (
-                flashList.map((flash) => (
-                  <FlashItem
-                    flashGroupName={flash.flashGroupName}
-                    key={flash._id}
-                    handleShowStats={() => handleFlashView(flash)}
-                    handleDelete={() =>
-                      handleDeleteFlashCard(flash.flashGroupName)
-                    }
-                  />
-                ))
-              ) : (
-                <EmptyItem />
-              )}
+                flashList.length > 0 ? (
+                  flashList.map((flash) => (
+                    <FlashItem
+                      flashGroupName={flash.flashGroupName}
+                      key={flash._id}
+                      handleShowStats={() => handleFlashView(flash)}
+                      handleDelete={() =>
+                        handleDeleteFlashCard(flash.flashGroupName)
+                      }
+                    />
+                  ))
+                ) : (
+                  <EmptyItem />
+                )
+              ) : null}
             </ul>
           )}
         </div>
