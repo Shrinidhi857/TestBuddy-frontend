@@ -14,9 +14,9 @@ function Sidebar({
   setFlashView,
 }) {
   const [quizList, setquizList] = useState([]);
-  const [showQuiz, showQuizList] = useState(false);
+  const [showQuiz, showQuizList] = useState(true);
   const [flashList, setflashList] = useState([]);
-  const [showFlash, setshowFlash] = useState(false);
+  const [showFlash, setshowFlash] = useState(true);
   const [loadflash, setLoadflash] = useState(false);
   const [loadqQuiz, setLoadQuiz] = useState(false);
 
@@ -71,6 +71,8 @@ function Sidebar({
   }
 
   async function getAllFlashCards() {
+    setLoadflash(true);
+
     const token = localStorage.getItem("token");
 
     const res = await fetch(
@@ -89,6 +91,8 @@ function Sidebar({
     }
 
     const data = await res.json();
+    setLoadflash(false);
+
     return data;
   }
 
@@ -191,11 +195,9 @@ function Sidebar({
         <div
           onClick={async () => {
             setshowFlash(!showFlash);
-            setLoadflash(true);
             const flashCards = await getAllFlashCards();
 
             setflashList(flashCards);
-            setLoadflash(false);
           }}
         >
           {(!loadflash && <h2>FlashCard</h2>) || (
