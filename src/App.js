@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(`✅ ${token}`);
+    //console.log(`✅ ${token}`);
     if (token) setPage("homepage"); // if logged in, go to homepage
   }, []);
 
