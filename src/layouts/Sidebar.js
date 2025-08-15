@@ -3,6 +3,7 @@ import "../index.css";
 import QuizItem from "../components/Items"; // assuming file name is Items.js
 import { useState } from "react";
 import FlashItem from "../components/flashItem";
+import EmptyItem from "../components/emptyItem";
 
 function Sidebar({
   curpage,
@@ -16,6 +17,8 @@ function Sidebar({
   const [showQuiz, showQuizList] = useState(false);
   const [flashList, setflashList] = useState([]);
   const [showFlash, setshowFlash] = useState(false);
+  const [loadflash, setLoadflash] = useState(false);
+  const [loadqQuiz, setLoadQuiz] = useState(false);
 
   function handleQuizView(quiz) {
     const selectedQuiz = quiz.quizes;
@@ -117,6 +120,8 @@ function Sidebar({
   }
 
   async function getAllQuizes() {
+    setLoadQuiz(true);
+
     const token = localStorage.getItem("token");
 
     const res = await fetch(
@@ -135,6 +140,8 @@ function Sidebar({
     }
 
     const data = await res.json();
+    setLoadQuiz(false);
+
     return data;
   }
 
@@ -154,13 +161,18 @@ function Sidebar({
             setquizList(quizzes);
           }}
         >
-          <h2>Quiz List</h2>
+          {(!loadqQuiz && <h2>Quiz List</h2>) || (
+            <div className="flex flex-row justify-center">
+              <div className="w-6 h-6 border-4 border-secondary-light border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
         </div>
         <div className="flex flex-row gap-4">
           <div className="w-3"></div>
-          <ul className=" flex flex-col align-center">
-            {showQuiz
-              ? quizList.map((quiz) => (
+          {!loadqQuiz && (
+            <ul className=" flex flex-col align-center">
+              {showQuiz ? (
+                quizList.map((quiz) => (
                   <QuizItem
                     quiz={quiz.quizName}
                     key={quiz._id}
@@ -168,26 +180,36 @@ function Sidebar({
                     handleDelete={() => handleDeleteQuiz(quiz.quizName)}
                   />
                 ))
-              : null}
-          </ul>
+              ) : (
+                <EmptyItem />
+              )}
+            </ul>
+          )}
         </div>
       </div>
       <div className="flex p-1 items-center flex-col cursor-pointer m-0.5 border-2 border-secondary-dark duration-100 hover:shadow-[0_0_10px_#ffffff] rounded-xl">
         <div
           onClick={async () => {
             setshowFlash(!showFlash);
+            setLoadflash(true);
             const flashCards = await getAllFlashCards();
 
             setflashList(flashCards);
+            setLoadflash(false);
           }}
         >
-          <h2>FlashCard</h2>
+          {(!loadflash && <h2>FlashCard</h2>) || (
+            <div className="flex flex-row justify-center">
+              <div className="w-6 h-6 border-4 border-secondary-light border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
         </div>
         <div className="flex flex-row gap-4">
           <div className="w-3"></div>
-          <ul className=" flex flex-col align-center">
-            {showFlash
-              ? flashList.map((flash) => (
+          {!loadflash && (
+            <ul className=" flex flex-col align-center">
+              {showFlash ? (
+                flashList.map((flash) => (
                   <FlashItem
                     flashGroupName={flash.flashGroupName}
                     key={flash._id}
@@ -197,8 +219,11 @@ function Sidebar({
                     }
                   />
                 ))
-              : null}
-          </ul>
+              ) : (
+                <EmptyItem />
+              )}
+            </ul>
+          )}
         </div>
       </div>
       <div

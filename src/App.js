@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Navbar from "./layouts/Navbar";
 import Sidebar from "./layouts/Sidebar";
 import Main from "./layouts/Main";
