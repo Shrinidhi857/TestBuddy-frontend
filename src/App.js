@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 import Navbar from "./layouts/Navbar";
 import Sidebar from "./layouts/Sidebar";
 import Main from "./layouts/Main";
@@ -6,20 +7,34 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 
 function App() {
-  const token = localStorage.getItem("token");
   const [sidebarShow, setsidebarShow] = useState(true);
-  console.log(`✅ ${token}`);
   const [page, setPage] = useState("login");
   const [quizView, setQuizView] = useState([]);
   const [flashView, setFlashView] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    //console.log(`✅ ${token}`);
-    if (token) setPage("homepage"); // if logged in, go to homepage
+
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        const currentTime = Date.now() / 1000; // in seconds
+
+        if (decoded.exp && decoded.exp > currentTime) {
+          setPage("homepage"); // token is valid
+        } else {
+          localStorage.removeItem("token"); // remove expired token
+          setPage("login"); // redirect to login
+        }
+      } catch (err) {
+        console.error("Invalid token:", err);
+        localStorage.removeItem("token");
+        setPage("login");
+      }
+    }
   }, []);
 
-  // Show login or register forms when not logged in
+  // Login Page
   if (page === "login") {
     return (
       <Login
@@ -29,6 +44,7 @@ function App() {
     );
   }
 
+  // Register Page
   if (page === "register") {
     return (
       <Register
@@ -38,7 +54,7 @@ function App() {
     );
   }
 
-  // When logged in or on other pages show the main app layout
+  // Main App
   return (
     <>
       <Navbar sidebarControll={setsidebarShow} sidebar={sidebarShow} />
